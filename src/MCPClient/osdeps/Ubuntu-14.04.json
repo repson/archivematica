@@ -1,0 +1,44 @@
+{
+  "_comments": [
+    "Add any comments here",
+    "Include here keys, repos, and packages required by this component not already in archivematicaCommon osdeps file"
+  ],
+  "osdeps_repokeys": [
+  ],
+  "osdeps_repos": [
+  ],
+  "osdeps_packages": [
+  "atool",
+  "bagit",
+  "bulk-extractor",
+  "clamav",
+  "clamav-daemon",
+  "ffmpeg",
+  "fits",
+  "gearman",
+  "imagemagick",
+  "inkscape",
+  "jhove",
+  "libimage-exiftool-perl",
+  "libxml2-utils",
+  "logapp",
+  "md5deep",
+  "mediainfo",
+  "nfs-common",
+  "openjdk-7-jre-headless",
+  "p7zip-full",
+  "pbzip2",
+  "postfix",
+  "python-fido",
+  "readpst",
+  "rsync",
+  "siegfried",
+  "sleuthkit",
+  "tesseract-ocr",
+  "tika",
+  "tree",
+  "ufraw",
+  "unrar-free",
+  "uuid"
+  ]
+}

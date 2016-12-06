@@ -1,0 +1,24 @@
+{
+  "_comments": [
+    "Add any comments here",
+    "http://stackoverflow.com/questions/244777/can-comments-be-used-in-json",
+    "http://stackoverflow.com/questions/2392766/multiline-strings-in-json"
+  ],
+  "osdeps_repokeys": [
+    { "id": "0x5236CA08",
+      "url": "https://packages.archivematica.org/GPG-KEY-archivematica",
+      "validate_certs": "no"
+    }
+  ],
+  "osdeps_repos": [
+    "deb [arch=amd64] http://packages.archivematica.org/1.5.x/ubuntu-externals trusty main",
+    "deb http://archive.ubuntu.com/ubuntu/ trusty multiverse",
+    "deb http://archive.ubuntu.com/ubuntu/ trusty-security universe",
+    "deb http://archive.ubuntu.com/ubuntu/ trusty-updates multiverse"
+  ],
+  "osdeps_packages": [
+   "python",
+   "python-pip",
+   "libmysqlclient-dev"
+  ]
+}
