@@ -22,7 +22,6 @@
 # @author Joseph Perry <joseph@artefactual.com>
 from __future__ import print_function
 import os
-import sys
 
 import django
 os.environ["DJANGO_SETTINGS_MODULE"] = "settings.local"
