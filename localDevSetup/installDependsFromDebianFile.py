@@ -53,7 +53,7 @@ for part in line.split(","):
     # install the exact version specified?
     part = part.strip().split(' ')[0]
     if part.find("${shlibs:Depends}") != -1 or \
-        part.find("${misc:Depends}") != -1:
+            part.find("${misc:Depends}") != -1:
         continue
     if part.startswith(("archivematica", "Depends:")):
         continue
