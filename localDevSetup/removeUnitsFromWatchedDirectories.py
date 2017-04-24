@@ -36,6 +36,7 @@ def removeEverythingInDirectory(directory):
     print("executing: ", execute)
     os.system(execute)
 
+
 def cleanWatchedDirectories():
     for path, in WatchedDirectory.objects.values_list('watched_directory_path'):
         try:
@@ -45,6 +46,7 @@ def cleanWatchedDirectories():
             print("debug except 2")
             print(type(inst))     # the exception instance
             print(inst.args)      # arguments stored in .args
+
 
 if __name__ == '__main__':
     import getpass
