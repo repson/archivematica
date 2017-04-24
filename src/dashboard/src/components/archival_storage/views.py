@@ -237,7 +237,7 @@ def search_augment_file_results(es_client, raw_results):
             clone['fileuuid'] = clone['FILEUUID']
             clone['href'] = aip['fields']['filePath'][0].replace(AIPSTOREPATH + '/', "AIPsStore/")
 
-        except:
+        except BaseException:
             aip = None
             clone['sipname'] = False
 

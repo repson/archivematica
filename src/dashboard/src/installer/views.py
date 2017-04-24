@@ -129,7 +129,7 @@ def fprupload(request):
             response_data['result'] = 'success'
         else:
             response_data['result'] = 'failed to fetch from ' + url
-    except:
+    except BaseException:
         response_data['result'] = 'failed to post to ' + url
 
     return helpers.json_response(response_data)

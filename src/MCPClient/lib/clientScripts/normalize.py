@@ -367,7 +367,7 @@ def main(opts):
         config.read(clientConfigFilePath)
         try:
             shared_path = config.get('MCPClient', 'sharedDirectoryMounted')
-        except:
+        except BaseException:
             shared_path = '/var/archivematica/sharedDirectory/'
         thumbnail_storage_dir = os.path.join(
             shared_path,

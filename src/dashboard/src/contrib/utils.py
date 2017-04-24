@@ -42,12 +42,12 @@ def get_directory_name(directory, default=None):
 
     try:
         return re.search(r'^.*/(?P<directory>.*)-[\w]{8}(-[\w]{4}){3}-[\w]{12}[/]{0,1}$', directory).group('directory')
-    except:
+    except BaseException:
         pass
 
     try:
         return re.search(r'^.*/(?P<directory>.*)/$', directory).group('directory')
-    except:
+    except BaseException:
         pass
 
     if directory:

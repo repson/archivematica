@@ -196,7 +196,7 @@ def wait_for_cluster_yellow_status(client, wait_between_tries=10, max_tries=10):
 
         try:
             health = client.cluster.health()
-        except:
+        except BaseException:
             print('ERROR: failed health check.')
             health['status'] = None
 
@@ -249,8 +249,7 @@ def transfer_mapping_is_correct(client):
     try:
         # mapping already created
         mapping = get_type_mapping(client, 'transfers', 'transferfile')
-    except:
-        # create mapping
+    except BaseException:  # create mapping
         set_up_mapping(client, 'transfers')
         mapping = get_type_mapping(client, 'transfers', 'transferfile')
 
@@ -261,8 +260,7 @@ def aip_mapping_is_correct(client):
     try:
         # mapping already created
         mapping = get_type_mapping(client, 'aips', 'aipfile')
-    except:
-        # create mapping
+    except BaseException:  # create mapping
         set_up_mapping(client, 'aips')
         mapping = get_type_mapping(client, 'aips', 'aipfile')
 

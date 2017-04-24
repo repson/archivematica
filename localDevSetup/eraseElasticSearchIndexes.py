@@ -11,7 +11,7 @@ from elasticsearch import ConnectionError, TransportError
 
 # allow "-f" to override prompt
 options = sys.argv[1:]
-if len(sys.argv) < 2 or not '-f' in options:
+if len(sys.argv) < 2 or '-f' not in options:
     proceed = raw_input("Are you sure you want to erase the ElasticSearch indexes? (y/N)\n")
     if proceed.lower() != 'y':
         print('Not going to erase the indexes.')

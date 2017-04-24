@@ -63,7 +63,7 @@ for transfer_dir in os.listdir(transferPath):
             root = tree.getroot()
 
             xmlMD5 = root.find('Document/MD5').text
-        except:
+        except BaseException:
             print('Error parsing: ', xmlFilePath, file=sys.stderr)
             exitCode += 1
             continue

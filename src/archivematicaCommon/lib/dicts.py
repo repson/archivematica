@@ -89,7 +89,7 @@ class ReplacementDict(dict):
             # sip can be a SIP or Transfer
             try:
                 sip = models.SIP.objects.get(uuid=sip)
-            except:
+            except BaseException:
                 sip = models.Transfer.objects.get(uuid=sip)
 
         shared_path = config.get('MCPServer', "sharedDirectory")
@@ -99,7 +99,7 @@ class ReplacementDict(dict):
         if file_ and not sip:
             try:
                 sip = file_.sip
-            except:
+            except BaseException:
                 sip = file_.transfer
 
         rd = ReplacementDict()
@@ -132,7 +132,7 @@ class ReplacementDict(dict):
             rd['%fileUUID%'] = file_.uuid
             try:
                 base_location = file_.sip.currentpath
-            except:
+            except BaseException:
                 base_location = file_.transfer.currentlocation
 
             if expand_path and sipdir is not None:

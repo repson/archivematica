@@ -187,7 +187,7 @@ class Access(models.Model):
         try:
             jobs = main.models.Job.objects.filter(sipuuid=self.sipuuid, subjobof='')
             return utils.get_directory_name_from_job(jobs)
-        except:
+        except BaseException:
             return _('N/A')
 
 
@@ -292,7 +292,7 @@ class UnitHiddenManager(models.Manager):
         """ Return True if the unit (SIP, Transfer) with uuid is hidden. """
         try:
             return self.get_queryset().get(uuid=uuid).hidden
-        except:
+        except BaseException:
             return False
 
 
@@ -329,7 +329,7 @@ class TransferManager(models.Manager):
     def is_hidden(self, uuid):
         try:
             return Transfer.objects.get(uuid__exact=uuid).hidden is True
-        except:
+        except BaseException:
             return False
 
 
@@ -841,7 +841,7 @@ class MicroServiceChoiceReplacementDic(models.Model):
             config = ast.literal_eval(self.replacementdic)
         except (ValueError, SyntaxError):
             error = _('Invalid syntax.')
-        if error is None and not type(config) is dict:
+        if error is None and not isinstance(config, dict):
             error = _('Invalid syntax.')
         if error is not None:
             raise forms.ValidationError(error)

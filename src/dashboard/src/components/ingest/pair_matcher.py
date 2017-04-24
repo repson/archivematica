@@ -170,7 +170,7 @@ def ingest_upload_atk_get_dip_object_paths(uuid):
     # work out directory name for DIP (should be the same as the SIP)
     try:
         sip = models.SIP.objects.get(uuid=uuid)
-    except:
+    except BaseException:
         raise Http404
 
     directory = os.path.basename(os.path.dirname(sip.currentpath))

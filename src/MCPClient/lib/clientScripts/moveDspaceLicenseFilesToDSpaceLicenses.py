@@ -40,7 +40,7 @@ def verifyMetsFileSecChecksums(metsFile, date, taskUUID, transferDirectory, tran
         path = os.path.join(transferDirectory, DspaceLicenses)
         if not os.path.isdir(path):
             os.mkdir(path)
-    except:
+    except BaseException:
         print("error creating DspaceLicenses directory.")
     exitCode = 0
     tree = etree.parse(metsFile)

@@ -68,7 +68,7 @@ def keynat(string):
     for c in string:
         if c.isdigit():
             d = int(c)
-            if r and type( r[-1] ) == it:
+            if r and isinstance(r[-1], it):
                 r[-1] = r[-1] * 10 + d
             else:
                 r.append(d)
@@ -140,7 +140,7 @@ def get_file_sip_uuid(fileuuid):
     return file.sip.uuid
 
 def task_duration_in_seconds(task):
-    if task.endtime != None:
+    if task.endtime is not None:
         duration = int(format(task.endtime, 'U')) - int(format(task.starttime, 'U'))
     else:
         duration = ''
@@ -155,7 +155,7 @@ def get_setting(setting, default=''):
     try:
         setting = models.DashboardSetting.objects.get(name=setting)
         return setting.value
-    except:
+    except BaseException:
         return default
 
 def get_boolean_setting(setting, default=''):
@@ -168,7 +168,7 @@ def get_boolean_setting(setting, default=''):
 def set_setting(setting, value=''):
     try:
         setting_data = models.DashboardSetting.objects.get(name=setting)
-    except:
+    except BaseException:
         setting_data = models.DashboardSetting.objects.create()
         setting_data.name = setting
 
@@ -182,7 +182,7 @@ def get_client_config_value(field):
 
     try:
         return config.get('MCPClient', field)
-    except:
+    except BaseException:
         return ''
 
 def get_server_config_value(field):
@@ -192,7 +192,7 @@ def get_server_config_value(field):
 
     try:
         return config.get('MCPServer', field)
-    except:
+    except BaseException:
         return ''
 
 def get_atom_levels_of_description(clear=True):
@@ -268,7 +268,7 @@ def send_file(request, filepath):
         extensions_to_download.index(extension)
         response['Content-Type'] = 'application/force-download'
         response['Content-Disposition'] = 'attachment; filename="' + filename + '"'
-    except:
+    except BaseException:
         mimetype = mimetypes.guess_type(filename)[0]
         response['Content-type'] = mimetype
 
@@ -280,7 +280,7 @@ def file_is_an_archive(file):
     return file.endswith('.zip') or file.endswith('.tgz') or file.endswith('.tar.gz')
 
 def pad_destination_filepath_if_it_already_exists(filepath, original=None, attempt=0):
-    if original == None:
+    if original is None:
         original = filepath
     attempt = attempt + 1
     if os.path.exists(filepath):

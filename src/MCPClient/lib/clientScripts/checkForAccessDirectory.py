@@ -116,7 +116,7 @@ if __name__ == '__main__':
             os.mkdir(DIPDirectory)
         if not os.path.isdir(os.path.join(DIPDirectory, "objects")):
             os.mkdir(os.path.join(DIPDirectory, "objects"))
-    except:
+    except BaseException:
         print("error creating DIP directory")
 
     exitCode = something(SIPDirectory, accessDirectory, objectsDirectory, DIPDirectory, SIPUUID, date, copy)

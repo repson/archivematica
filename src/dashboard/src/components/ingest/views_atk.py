@@ -77,8 +77,7 @@ def ingest_upload_atk_save_to_db(request, uuid):
 
     pairs = pair_matcher.getDictArray(request.POST, 'pairs')
 
-    keys = list(pairs.keys())
-    keys.sort()
+    keys = sorted(pairs.keys())
 
     for key in keys:
         pairing = models.AtkDIPObjectResourcePairing.objects.create(
@@ -141,7 +140,7 @@ def ingest_upload_atk_match_dip_objects_to_resource_levels(request, uuid, resour
             parent_url = 'components.ingest.views_atk.ingest_upload_as_resource_component'
 
         return pair_matcher.match_dip_objects_to_resource_levels(client, request, resource_id, 'ingest/atk/match.html', parent_id, parent_url, _get_reset_view(uuid), uuid)
-    except:
+    except BaseException:
         return HttpResponseServerError('Database error. Please contact an administrator.')
 
 def ingest_upload_atk_match_dip_objects_to_resource_component_levels(request, uuid, resource_component_id):
@@ -157,5 +156,5 @@ def ingest_upload_atk_match_dip_objects_to_resource_component_levels(request, uu
             parent_url = 'components.ingest.views_atk.ingest_upload_as_resource_component'
 
         return pair_matcher.match_dip_objects_to_resource_component_levels(client, request, resource_component_id, 'ingest/atk/match.html', parent_id, parent_url, _get_reset_view(uuid), uuid)
-    except:
+    except BaseException:
         return HttpResponseServerError('Database error. Please contact an administrator.')

@@ -79,7 +79,7 @@ def edit(request, id=None):
         try:
             user = User.objects.get(pk=id)
             title = 'Edit user %s' % user
-        except:
+        except BaseException:
             raise Http404
 
     # Form
@@ -127,7 +127,7 @@ def edit(request, id=None):
     try:
         api_key_data = ApiKey.objects.get(user_id=user.pk)
         api_key = api_key_data.key
-    except:
+    except BaseException:
         api_key = '<no API key generated>'
 
     return render(request, 'accounts/edit.html', {
@@ -162,5 +162,5 @@ def delete(request, id):
             raise Http404
         user.delete()
         return redirect('components.accounts.views.list')
-    except:
+    except BaseException:
         raise Http404

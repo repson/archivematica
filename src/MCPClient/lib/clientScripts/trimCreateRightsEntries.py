@@ -73,7 +73,7 @@ def getTimedeltaFromRetensionSchedule(RetentionSchedule):
 
 def getDateTimeFromDateClosed(dateClosed):
     i = 19 #the + or minus for offset (DST + timezone)
-    if dateClosed== None:
+    if dateClosed is None:
         return
 
     dateClosedDT = datetime.strptime(dateClosed[:i], '%Y-%m-%dT%H:%M:%S')
@@ -99,14 +99,14 @@ for dir in os.listdir(transferPath):
     try:
         tree = etree.parse(xmlFilePath)
         root = tree.getroot()
-    except:
+    except BaseException:
         print("Error parsing: ", xmlFilePath.replace(transferPath, "%transferDirectory%", 1), file=sys.stderr)
         exitCode += 1
         continue
     try:
         RetentionSchedule = root.find("Container/RetentionSchedule").text
         DateClosed = root.find("Container/DateClosed").text
-    except:
+    except BaseException:
         print("Error retrieving values from: ", xmlFilePath.replace(transferPath, "%transferDirectory%", 1), file=sys.stderr)
         exitCode += 1
         continue

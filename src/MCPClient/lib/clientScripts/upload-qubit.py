@@ -100,8 +100,7 @@ def start(data):
     try:
         # This upload was called before, restore Access record
         access = models.Access.objects.get(sipuuid=data.uuid)
-    except:
-        # First time this job is called, create new Access record
+    except BaseException:  # First time this job is called, create new Access record
         access = models.Access(sipuuid=data.uuid)
         access.save()
 
@@ -110,7 +109,7 @@ def start(data):
     try:
         target = cPickle.loads(str(access.target))
         log("Target: %s" % (target['target']))
-    except:
+    except BaseException:
         error("No target was selected")
 
     # Rsync if data.rsync_target option was passed to this script

@@ -301,7 +301,7 @@ LOGIN_EXEMPT_URLS  = [
 # Django debug toolbar
 try:
     import debug_toolbar  # noqa: F401
-except:
+except BaseException:
     pass
 else:
     MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)

@@ -52,7 +52,7 @@ def administration(request):
 
 
 def failure_report(request, report_id=None):
-    if report_id != None:
+    if report_id is not None:
         report = models.Report.objects.get(pk=report_id)
         return render(request, 'administration/reports/failure_detail.html', locals())
     else:
@@ -144,7 +144,7 @@ def _atom_levels_of_description_sort_adjust(level_id, sortorder='promote'):
 def storage(request):
     try:
         locations = storage_service.get_location(purpose="AS")
-    except:
+    except BaseException:
         messages.warning(request, _('Error retrieving locations: is the storage server running? Please contact an administrator.'))
 
     system_directory_description = 'Available storage'
@@ -339,7 +339,7 @@ def usage_clear(request, dir_id):
 def sources(request):
     try:
         locations = storage_service.get_location(purpose="TS")
-    except:
+    except BaseException:
         messages.warning(request, _('Error retrieving locations: is the storage server running? Please contact an administrator.'))
 
     system_directory_description = 'Available transfer source'

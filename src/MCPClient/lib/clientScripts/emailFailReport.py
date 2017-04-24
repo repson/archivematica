@@ -172,7 +172,7 @@ def get_content_for(unit_type, unit_name, unit_uuid, html=True):
         else:
             root.append(t1)
             etree.SubElement(root, 'p')
-    except:
+    except BaseException:
         pass
 
     html2code = get_unit_job_log_html(unit_uuid)

@@ -217,7 +217,7 @@ def rights_edit(request, uuid, id=None, section='ingest'):
             if not createdCopyright:
                 try:
                     createdCopyright = models.RightsStatementCopyright.objects.get(rightsstatement=createdRights)
-                except:
+                except BaseException:
                     createdCopyright = models.RightsStatementCopyright(rightsstatement=createdRights)
                     createdCopyright.save()
 
@@ -233,7 +233,7 @@ def rights_edit(request, uuid, id=None, section='ingest'):
             if not createdCopyright:
                 try:
                     createdCopyright = models.RightsStatementCopyright.objects.get(rightsstatement=createdRights)
-                except:
+                except BaseException:
                     createdCopyright = models.RightsStatementCopyright(rightsstatement=createdRights)
                     createdCopyright.save()
 
@@ -263,7 +263,7 @@ def rights_edit(request, uuid, id=None, section='ingest'):
             if not createdLicense:
                 try:
                     createdLicense = models.RightsStatementLicense.objects.get(rightsstatement=createdRights)
-                except:
+                except BaseException:
                     createdLicense = models.RightsStatementLicense(rightsstatement=createdRights)
                     createdLicense.save()
 
@@ -279,7 +279,7 @@ def rights_edit(request, uuid, id=None, section='ingest'):
             if not createdLicense:
                 try:
                     createdLicense = models.RightsStatementLicense.objects.get(rightsstatement=createdRights)
-                except:
+                except BaseException:
                     createdLicense = models.RightsStatementLicense(rightsstatement=createdRights)
                     createdLicense.save()
 
@@ -372,7 +372,7 @@ def rights_edit(request, uuid, id=None, section='ingest'):
             if not createdOther:
                 try:
                     createdOther = models.RightsStatementOtherRightsInformation.objects.get(rightsstatement=createdRights)
-                except:
+                except BaseException:
                     createdOther = models.RightsStatementOtherRightsInformation(rightsstatement=createdRights)
                     createdOther.save()
 
@@ -388,7 +388,7 @@ def rights_edit(request, uuid, id=None, section='ingest'):
             if not createdOther:
                 try:
                     createdOther = models.RightsStatementOtherRightsInformation.objects.get(rightsstatement=createdRights)
-                except:
+                except BaseException:
                     createdOther = models.RightsStatementOtherRightsInformation(rightsstatement=createdRights)
                     createdOther.save()
 
@@ -400,13 +400,13 @@ def rights_edit(request, uuid, id=None, section='ingest'):
 
             new_content_type_created = 'other'
 
-        if request.POST.get('next_button', '') != None and request.POST.get('next_button', '') != '':
+        if request.POST.get('next_button', '') is not None and request.POST.get('next_button', '') != '':
             return redirect('components.rights.views.%s_rights_grants_edit' % section, uuid, createdRights.pk)
         else:
             url = reverse('components.rights.views.%s_rights_edit' % section, args=[uuid, createdRights.pk])
             try:
                 url = url + '?created=' + new_content_type_created
-            except:
+            except BaseException:
                 pass
             return redirect(url)
     else:
@@ -493,7 +493,7 @@ def rights_grants_edit(request, uuid, id, section='ingest'):
     grantFormset = GrantFormSet(instance=viewRights)
 
     if request.method == 'POST':
-        if request.POST.get('next_button', '') != None and request.POST.get('next_button', '') != '':
+        if request.POST.get('next_button', '') is not None and request.POST.get('next_button', '') != '':
             return redirect('components.rights.views.%s_rights_list' % section, uuid)
         else:
             url = reverse('components.rights.views.%s_rights_grants_edit' % section, args=[uuid, viewRights.pk])
@@ -513,7 +513,7 @@ def rights_holders_lookup(request, id):
     try:
         agent = models.RightsStatementLinkingAgentIdentifier.objects.get(pk=id)
         result = agent.linkingagentidentifiervalue + ' [' + str(agent.id) + ']'
-    except:
+    except BaseException:
         result = ''
     return HttpResponse(result)
 
@@ -523,7 +523,8 @@ def rights_holders_autocomplete(request):
 
     try:
         search_text = request.REQUEST['text']
-    except Exception: pass
+    except Exception:
+        pass
 
     response = {}
 

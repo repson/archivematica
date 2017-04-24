@@ -60,17 +60,17 @@ def search_parameter_prep(request):
 
             try:
                 fields[index]
-            except:
+            except BaseException:
                 fields.insert(index, '')
 
             try:
                 ops[index]
-            except:
+            except BaseException:
                 ops.insert(index, 'or')
 
             try:
                 types[index]
-            except:
+            except BaseException:
                 types.insert(index, '')
 
         # For "other" fields, the actual title of the subfield is located in a second array;
@@ -99,7 +99,7 @@ def extract_url_search_params_from_request(request):
         search_params = request.get_full_path().split('?')[1]
         end_of_search_params = search_params.index('&page')
         search_params = search_params[:end_of_search_params]
-    except:
+    except BaseException:
         pass
     return search_params
 
@@ -238,5 +238,5 @@ def indexed_count(es_client, index, types=None, query=None):
         types = ','.join(types)
     try:
         return es_client.count(index=index, doc_type=types, body=query)['count']
-    except:
+    except BaseException:
         return 0

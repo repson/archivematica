@@ -356,7 +356,7 @@ def get_modified_standard_transfer_path(transfer_type=None):
     if transfer_type is not None:
         try:
             path = os.path.join(path, filesystem_ajax_views.TRANSFER_TYPE_DIRECTORIES[transfer_type])
-        except:
+        except BaseException:
             return None
 
     return path.replace(SHARED_DIRECTORY_ROOT, '%sharedPath%', 1)
