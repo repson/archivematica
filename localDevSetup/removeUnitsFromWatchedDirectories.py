@@ -52,7 +52,7 @@ if __name__ == '__main__':
     print("user: ", user)
     if user != "root":
         print("Please run as root (with sudo)")
-        exit (1)
+        exit(1)
     cleanWatchedDirectories()
     alsoRemove = [
         "/var/archivematica/sharedDirectory/failed/",

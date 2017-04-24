@@ -21,7 +21,7 @@
 # @subpackage archivematicaDev
 # @author Joseph Perry <joseph@artefactual.com>
 
-#Depends: ${shlibs:Depends}, ${misc:Depends}, libapache2-mod-wsgi, python-django, python-django-doc
+# Depends: ${shlibs:Depends}, ${misc:Depends}, libapache2-mod-wsgi, python-django, python-django-doc
 from __future__ import print_function
 import os
 import sys
@@ -69,5 +69,5 @@ for part in line.split(","):
         print("exitCode:", exitCode)
         print(stdOut)
         print(stdError, file=sys.stderr)
-    #else:
-        #print "OK"
+    # else:
+        # print "OK"
