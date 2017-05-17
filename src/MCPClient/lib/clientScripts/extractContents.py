@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 
 from __future__ import print_function
+import json
 import os
 import sys
 import uuid
@@ -8,7 +9,7 @@ import uuid
 import django
 django.setup()
 # dashboard
-from fpr.models import FPCommand
+from fpr.models import FPCommand, FPTool
 from main.models import FileFormatVersion, File
 
 # archivematicaCommon
@@ -35,12 +36,13 @@ def tree(root):
         for file in files:
             yield os.path.join(dirpath, file)
 
-def assign_uuid(filename, package_uuid, transfer_uuid, date, task_uuid, sip_directory, package_filename):
+def assign_uuid(filename, package_uuid, transfer_uuid, date, task_uuid, sip_directory, package_filename, tool_description):
     file_uuid = uuid.uuid4().__str__()
     relative_path = filename.replace(sip_directory, "%transferDirectory%", 1)
     relative_package_path = package_filename.replace(sip_directory, "%transferDirectory%", 1)
     package_detail = "{} ({})".format(relative_package_path, package_uuid)
-    event_detail = "Unpacked from: " + package_detail
+    event_detail = "Unpacked using {} from: {}".format(
+        tool_description, package_detail)
     addFileToTransfer(relative_path, file_uuid, transfer_uuid, task_uuid, date,
         sourceType="unpacking", eventDetail=event_detail)
     updateSizeAndChecksum(file_uuid, filename, date, uuid.uuid4().__str__())
@@ -127,11 +129,13 @@ def main(transfer_uuid, sip_directory, date, task_uuid, delete=False):
         else:
             extracted = True
             print('Extracted contents from', os.path.basename(file_path))
-
+            tool_description = get_tool_description(command, stdout)
             # Assign UUIDs and insert them into the database, so the newly-
             # extracted files are properly tracked by Archivematica
             for extracted_file in tree(output_directory(file_path, date)):
-                assign_uuid(extracted_file, file_.uuid, transfer_uuid, date, task_uuid, sip_directory, file_.currentlocation)
+                assign_uuid(extracted_file, file_.uuid, transfer_uuid, date,
+                            task_uuid, sip_directory, file_.currentlocation,
+                            tool_description)
             # We may want to remove the original package file after extracting its contents
             if delete:
                 delete_and_record_package_file(file_path, file_.uuid, file_.currentlocation)
@@ -141,6 +145,31 @@ def main(transfer_uuid, sip_directory, date, task_uuid, delete=False):
         return 0
     else:
         return -1
+
+
+def get_tool_description(command, stdout):
+    """Return a string describing the tool used by the extraction command. This
+    allows the output of the command to override the tool it is associated with
+    in the database iff the following are true:
+
+    a. tool output format is JSON (fmt/817)
+    b. tool output object has a `tool_override` attribute
+    c. the tool_override attribute matches the description of an existing
+       fpr_fptool.
+
+    """
+    tool = command.tool
+    if command.output_format and command.output_format.pronom_id == 'fmt/817':
+        output = json.loads(stdout)
+        tool_override = output.get('tool_override')
+        if tool_override:
+            try:
+                tool = FPTool.objects.get(enabled=True, description=tool_override)
+            except FPTool.DoesNotExist:
+                pass
+    return 'program="{tool.description}"; version="{tool.version}"'.format(
+        tool=tool)
+
 
 if __name__ == '__main__':
     logger = get_script_logger("archivematica.mcp.client.extractContents")
