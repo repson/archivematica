@@ -187,9 +187,6 @@ def get_events_from_db(uuid):
             ('event_date_time', event_mdl.event_datetime.isoformat()),
             # String detailing the program and algorithm used and the program's
             # version (and any notable parameters passed).
-            #('event_detail', 'program="7z"; '
-            #                 'version="9.20"; '
-            #                 'algorithm="bzip2"'),
             ('event_detail', escape(event_mdl.event_detail)),
             (
                 'event_outcome_information',

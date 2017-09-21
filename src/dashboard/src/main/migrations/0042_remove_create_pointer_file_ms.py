@@ -24,7 +24,6 @@ def data_migration(apps, schema_editor):
     MicroServiceChainLinkExitCode = apps.get_model(
         'main', 'MicroServiceChainLinkExitCode')
     StandardTaskConfig = apps.get_model('main', 'StandardTaskConfig')
-    TaskConfig = apps.get_model('main', 'TaskConfig')
 
     ###########################################################################
     # Useful Model Instances
@@ -67,7 +66,7 @@ def data_migration(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0039_delete_sudo_clientscript'),
+        ('main', '0041_bind_pids'),
     ]
 
     operations = [
